@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 L = 3
 n = [2, 3, 3, 1]
@@ -15,7 +16,12 @@ def prepare_data():
               [216, 67],[145, 67],[184, 64],[130, 69]])
     y = np.array([0, 1, 1, 0, 0, 1, 1, 0, 1, 0])
     m = 10
-    A0 = X.T
+
+    mean = np.mean(X, axis=0)
+    std_dev = np.std(X, axis=0)
+    X_scaled = (X - mean) / std_dev
+
+    A0 = X_scaled.T
     Y = y.reshape(n[L], m)
     return A0, Y, m
 
@@ -128,3 +134,8 @@ def train():
 
 costs = train()
 print(costs)
+
+plt.plot(costs)
+plt.xlabel('Epoch')
+plt.ylabel('Cost')
+plt.show()
